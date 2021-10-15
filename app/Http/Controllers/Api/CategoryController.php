@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::included()->filter()->sort()->getOrPaginate();
+        $categories = Category::included()
+            ->filter()
+            ->sort()
+            ->getOrPaginate();
 
-        return $categories;
+        return CategoryResource::collection($categories);
     }
 
     /**
@@ -48,7 +52,7 @@ class CategoryController extends Controller
 //        $category = Category::with('posts.user')->findOrFail($id);
 //        $category = Category::findOrFail($id);
         $category = Category::included()->findOrFail($id);
-        return $category;
+        return new CategoryResource($category);
     }
 
     /**
