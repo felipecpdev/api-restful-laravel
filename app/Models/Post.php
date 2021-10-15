@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\ApiTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, ApiTrait;
 
     const BORRADOR = 1;
     const PUBLICADO = 2;
+
+    protected $fillable = ['name', 'slug', 'extract', 'body', 'category_id', 'user_id'];
 
     //relacion uno es a muchos inversa
     public function user()
@@ -30,7 +33,8 @@ class Post extends Model
     }
 
     //relacion uno a muchos polimorfica
-    public function  images(){
-        return $this->morphMany(Image::class,'imageable');
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 }
