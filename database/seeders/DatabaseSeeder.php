@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('posts');
         Storage::makeDirectory('posts');
 
+        $this->call(RoleSeeder::class);
+
         // \App\Models\User::factory(10)->create();
         $this->call(UserSeeder::class);
 
